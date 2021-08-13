@@ -1,28 +1,18 @@
-let util = require('util')
-let path = require('path')
-let { spawn } = require('child_process')
-
-// HartA tahta Xteam
-let handler  = async (m, { conn, text }) => {
-  let d = new Date
-  let tgl = d.toLocaleDateString('id-Id')
-  let hari = d.toLocaleDateString('id-Id', { weekday: 'long' })
- text,
-await conn.sendFile(m.chat, global.API('zeks', '/api/hartatahta', 'APIKEY' , { text, }), 'Harta Tahta.png', 'Nih udah jadi Harta tahtamu...\n *_Tetap Support:_* *Kuhong*', m)
+let fetch = require('node-fetch')
+let handler = async (m, { conn, args }) => {
+   response = args.join(' ')
+  if (!args) throw 'Masukkan Parameter'
+  m.reply('*[❗] Wait,Tunggu Bentar Kak Sedang Dalam Proses...*')
+  let res = `https://api.zeks.xyz/api/hartatahta?apikey=ramaganzapikey&text=${response}`
+  conn.sendFile(m.chat, res, 'nama.jpg', `Nih Mhank`, m, false)
 }
-handler.help = ['tahta2'].map(v => v + '<teks>')
+handler.help = ['tahta2'].map(v => v + ' <teks>')
 handler.tags = ['nulis']
-handler.command = /^tahta2$/i
-handler.owner = false
-handler.mods = false
-handler.premium = false
-handler.group = true
-handler.private = false
-
-handler.admin = false
-handler.botAdmin = false
-
-handler.fail = null
+handler.command = /^(tahta2)$/i
+handler.limit = true
 handler.register = true
+handler.group = false
+handler.owner = false
+handler.premium = false
 
 module.exports = handler
